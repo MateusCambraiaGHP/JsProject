@@ -8,6 +8,32 @@ calculaTempoRestante(tempoRestante);
 reiniciaJogo();
 
 
+function inserePlacar() {
+   let corpotabela = $(".placar").find("tbody");
+   let numPalavras = $("#contador-palavras").text();
+   let user = "Mateus";
+   let linha = novaLinha(user, numPalavras);
+   linha.find(".botao-remover").click(removeLinha());
+   corpotabela.append(linha);
+}
+function novaLinha(user, numPalavras) {
+    var linha = $("<tr>");
+    var colunaUsuario = $("<td>").text(user);
+    var colunaPalavras = $("<td>").text(numPalavras);
+    var colunaRemover = $("<td>");
+    var link = $("<a>").addClass("botao-remover").attr("href", "#");
+    var icone = $("<i>").addClass("small").addClass("material-icons").text("delete");
+    link.append(icone);
+    colunaRemover.append(link);
+    linha.append(colunaUsuario).append(colunaPalavras).append(colunaRemover);
+    return linha;
+}
+function removeLinha() {
+    $(".botao-remover").click(function (event) {
+        $(this).parent().parent().remove();
+    });    
+}
+
 
 function validaResposta() {
     var frase = $(".frase").text();
@@ -62,10 +88,14 @@ function calculaTempoRestante(tempoRestante) {
             tempoRestante--;
             $("#tempo-digitacao").text(tempoRestante);
             if (tempoRestante == 0) {
-                campoDigitacao.attr("disabled", true);
                 clearInterval(cronometroID);
-                campoDigitacao.css("background-color", "lightgray")
+                finalizaJogo();
             }
         }, 1000);
     });
+}
+function finalizaJogo() {
+    campoDigitacao.attr("disabled", true);
+    campoDigitacao.css("background-color", "lightgray")
+    inserePlacar();
 }
