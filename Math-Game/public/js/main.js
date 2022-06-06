@@ -56,8 +56,23 @@ function atualizaTamanhoDaFrase() {
     let tamanhoFrase = $("#tamanho-frase");
     tamanhoFrase.text(numPalavras);
 }
+function inicializaContador() {
+    campoDigitacao.on("input", function () {
+
+        numcaracteres = this.value.length;
+        numPalavras = this.value.split(/\S+/).length - 1;
+
+        let contadorCaracteres = $("#contador-caracteres")
+        let contadorPalavras = $("#contador-palavras")
+        contadorCaracteres.text(numcaracteres);
+        contadorPalavras.text(numPalavras);
+        validaResposta();
+    });
+}
 function reiniciaJogo() {
     $("#botao-reinicia").click(function () {
+        let contadorCaracteres = $("#contador-caracteres")
+        let contadorPalavras = $("#contador-palavras")
         campoDigitacao.attr("disabled", false);
         campoDigitacao.css("background-color", "white")
         campoDigitacao.val("");
@@ -69,27 +84,14 @@ function reiniciaJogo() {
         campoDigitacao.removeClass("borda-verde");
     });
 }
-function inicializaContador() {
-    campoDigitacao.on("input", function () {
-
-        numcaracteres = this.value.length;
-        numPalavras = this.value.split(/\S+/).length - 1;
-
-        contadorCaracteres = $("#contador-caracteres")
-        contadorPalavras = $("#contador-palavras")
-        contadorCaracteres.text(numcaracteres);
-        contadorPalavras.text(numPalavras);
-        validaResposta();
-    });
-}
 function calculaTempoRestante(tempoRestante) {
     campoDigitacao.one("focus", function () {
         var cronometroID = setInterval(function () {
             tempoRestante--;
             $("#tempo-digitacao").text(tempoRestante);
             if (tempoRestante == 0) {
-                clearInterval(cronometroID);
                 finalizaJogo();
+                clearInterval(cronometroID);
             }
         }, 1000);
     });
