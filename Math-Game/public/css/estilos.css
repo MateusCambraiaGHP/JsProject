@@ -24,3 +24,20 @@
     color: rgb(251, 78, 78);
 
 }
+#erro{
+    color: rgb(251, 78, 78);
+    font-size: large;
+    display: none;
+}
+#spinner{
+    display: none;
+}
+#nome-jogo{
+    color: red;   
+}
+#frase-id{
+    width: 40px;
+}
+#botao-sync{
+    float: right;
+}
