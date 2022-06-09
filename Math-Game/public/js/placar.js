@@ -57,11 +57,20 @@ function mostraPlacar() {
 }
 
 function sincronizaPlacar() {
-    let dados = {
-        _id	: 10,
-        texto:"HAHAHAHAH.",
-        tempo:15
+    let arrayPlacar = [];
+    let linhas = $("#tabela-placar>tr");
+    linhas.each(function () {
+        let obj = {
+            usuario :$(this).find("td:nth-child(1)").text(),
+            pontos  :$(this).find("td:nth-child(2)").text()
+        };
+        arrayPlacar.push(obj);
+    });
+    var dados = {
+        placar: arrayPlacar
     };
-    console.log(dados);
-    
+
+    $.post("http://localhost:3000/placar",dados, function(){
+        console.log("placarSalvo");
+    });
 }
